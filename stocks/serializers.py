@@ -10,7 +10,7 @@ class WarehouseSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     # On ajoute un champ supplémentaire pour afficher le nom de l'entrepôt associé à chaque produit
-    #StringRelatedField permet d'afficher la représentation en chaîne de caractères de l'objet lié 
+    #StringRelatedField permet d'afficher une relation sous forme de texte lisible de l'objet lié 
     entrepot_nom = serializers.StringRelatedField(source='entrepot', read_only=True)
 
     class Meta:

@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -24,7 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             )
 
         try:
-            new_warehouse = Warehouse.objects.get(id=new_warehouse_id)
+            new_warehouse = get_object_or_404(Warehouse, id=new_warehouse_id)
         except Warehouse.DoesNotExist:
             return Response({'error': 'Entrepôt non trouvé.'}, status=404)
 
