@@ -18,20 +18,26 @@ class ProductViewSet(viewsets.ModelViewSet):
         product = self.get_object()
         new_warehouse_id = request.data.get('new_warehouse_id')
 
+        # Vérification si ID fourni
+        if not new_warehouse_id:
+            return Response({'error': 'ID entrepôt requis.'}, status=400)
+
+        # Vérification métier
         if product.etat == 'perime':
             return Response(
                 {'error': 'Impossible de déplacer un produit périmé.'},
                 status=400
             )
 
-        try:
-            new_warehouse = get_object_or_404(Warehouse, id=new_warehouse_id)
-        except Warehouse.DoesNotExist:
-            return Response({'error': 'Entrepôt non trouvé.'}, status=404)
+        # Récupération de l'entrepôt
+        new_warehouse = get_object_or_404(Warehouse, id=new_warehouse_id)
 
+        # Déplacement
         product.entrepot = new_warehouse
         product.save()
+
         return Response({'status': 'Produit déplacé avec succès.'})
+    
 
 class WarehouseViewSet(viewsets.ModelViewSet):
     queryset = Warehouse.objects.all()
