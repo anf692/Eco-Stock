@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-x0%h1)nrbnq!btf(ucn7sgpxh5#-i+ee&%1%45(4rb0fw!y%-%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -59,6 +60,8 @@ SPECTACULAR_SETTINGS = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,3 +137,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+# On définit CORS_ALLOW_ALL_ORIGINS à True pour autoriser toutes les origines
+CORS_ALLOW_ALL_ORIGINS = True
+
+#On peut aussi définir les origines autorisées individuellement
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS =[
+    'authorization',
+    'content-type',
+]
+
